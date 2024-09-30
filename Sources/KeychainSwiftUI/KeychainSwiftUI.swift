@@ -26,7 +26,7 @@ public struct KeychainStorage<Value: Codable & Equatable & Sendable>: DynamicPro
     @State private var value: Value?
    
     @MainActor
-    init(wrappedValue: Value? = nil, _ key: String, accessGroup: String? = nil) {
+    public init(wrappedValue: Value? = nil, _ key: String, accessGroup: String? = nil) {
         self.key = key
         self.chain = KeychainSwift()
         self.observer = .init(publisher: keychainSubject.filter { k in k == key }.map { _ in () }.eraseToAnyPublisher())
