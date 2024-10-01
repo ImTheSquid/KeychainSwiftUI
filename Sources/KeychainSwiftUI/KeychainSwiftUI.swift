@@ -5,6 +5,7 @@ import Combine
 import SwiftUI
 import KeychainSwift
 
+@MainActor
 private final class PublisherObservableObject: ObservableObject {
     var subscriber: AnyCancellable?
     
@@ -19,7 +20,8 @@ private final class PublisherObservableObject: ObservableObject {
 fileprivate let keychainSubject = PassthroughSubject<String, Never>()
 
 @propertyWrapper
-public struct KeychainStorage<Value: Codable & Equatable & Sendable>: DynamicProperty {
+@MainActor
+public struct KeychainStorage<Value: Codable & Equatable & Sendable>: @preconcurrency DynamicProperty {
     @ObservedObject private var observer: PublisherObservableObject
     private let key: String
     private let chain: KeychainSwift
